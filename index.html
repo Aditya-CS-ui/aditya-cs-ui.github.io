@@ -29,16 +29,10 @@ body{
   overflow-x:hidden;
   line-height:1.6;
 }
-
-/* ---- SCROLLBAR ---- */
 ::-webkit-scrollbar{width:4px}
 ::-webkit-scrollbar-track{background:var(--bg)}
 ::-webkit-scrollbar-thumb{background:var(--cyan);border-radius:2px}
-
-/* ---- CANVAS STARS ---- */
 #stars{position:fixed;top:0;left:0;width:100%;height:100%;z-index:0;pointer-events:none}
-
-/* ---- NAVBAR ---- */
 nav{
   position:fixed;top:0;left:0;right:0;z-index:100;
   display:flex;align-items:center;justify-content:space-between;
@@ -69,16 +63,12 @@ nav{
 }
 .nav-links a:hover,.nav-links a.active{color:var(--cyan)}
 .nav-links a:hover::after,.nav-links a.active::after{transform:scaleX(1)}
-
-/* ---- SECTIONS ---- */
 section{
   position:relative;z-index:1;
   min-height:100vh;
   padding:7rem 3rem 4rem;
   max-width:1100px;margin:0 auto;
 }
-
-/* ---- HERO ---- */
 #hero{
   display:flex;flex-direction:column;justify-content:center;
   min-height:100vh;padding-top:6rem;
@@ -154,7 +144,6 @@ section{
   content:'';width:1px;height:40px;background:linear-gradient(var(--cyan),transparent);
 }
 
-/* ---- SECTION HEADER ---- */
 .section-label{
   font-family:'JetBrains Mono',monospace;
   font-size:0.75rem;color:var(--cyan);
@@ -172,7 +161,6 @@ section{
   margin-bottom:3rem;
 }
 
-/* ---- ABOUT ---- */
 .about-grid{
   display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:center;
 }
@@ -210,7 +198,6 @@ section{
   font-family:'JetBrains Mono',monospace;
 }
 
-/* ---- SKILLS ---- */
 .skills-grid{
   display:grid;grid-template-columns:1fr 1fr;gap:1.2rem;
 }
@@ -234,7 +221,6 @@ section{
   transition:transform 1.2s cubic-bezier(0.16,1,0.3,1);
 }
 
-/* ---- PROJECTS ---- */
 .projects-grid{
   display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));
   gap:1.5rem;
@@ -279,7 +265,6 @@ section{
   border-radius:2px;color:var(--muted);
 }
 
-/* ---- RESUME / TIMELINE ---- */
 .timeline{position:relative;padding-left:3rem}
 .timeline::before{
   content:'';position:absolute;left:0.5rem;top:0;bottom:0;
@@ -313,8 +298,6 @@ section{
 }
 .res-skill-icon{font-size:1.5rem;margin-bottom:0.4rem}
 .res-skill-name{font-size:0.8rem;color:var(--muted)}
-
-/* ---- CONTACT ---- */
 .contact-grid{display:grid;grid-template-columns:1fr 1.5fr;gap:4rem;align-items:start}
 .contact-info p{color:var(--muted);line-height:1.8;margin-bottom:2rem}
 .contact-links{display:flex;flex-direction:column;gap:1rem}
@@ -329,7 +312,8 @@ section{
   background:rgba(0,212,255,0.08);
   border:1px solid var(--border);
   display:flex;align-items:center;justify-content:center;
-  font-size:1rem;
+  font-size:1rem;color:var(--muted);
+  flex-shrink:0;
 }
 .form-group{margin-bottom:1.2rem}
 .form-group label{
@@ -357,7 +341,6 @@ section{
   border-radius:3px;display:none;
 }
 
-/* ---- FOOTER ---- */
 footer{
   position:relative;z-index:1;text-align:center;
   padding:2rem;border-top:1px solid var(--border);
@@ -365,8 +348,6 @@ footer{
   font-family:'JetBrains Mono',monospace;
 }
 footer span{color:var(--cyan)}
-
-/* ---- ANIMATIONS ---- */
 @keyframes fadeUp{
   from{opacity:0;transform:translateY(20px)}
   to{opacity:1;transform:translateY(0)}
@@ -383,7 +364,6 @@ footer span{color:var(--cyan)}
 .reveal{opacity:0;transform:translateY(24px);transition:opacity 0.7s,transform 0.7s}
 .reveal.visible{opacity:1;transform:translateY(0)}
 
-/* ---- MOBILE ---- */
 @media(max-width:768px){
   nav{padding:1rem 1.5rem}
   .nav-links{gap:1rem}
@@ -398,7 +378,6 @@ footer span{color:var(--cyan)}
 
 <canvas id="stars"></canvas>
 
-<!-- NAVBAR -->
 <nav>
   <a class="nav-logo" href="#hero">ADI<span>TYA</span></a>
   <ul class="nav-links">
@@ -409,8 +388,6 @@ footer span{color:var(--cyan)}
     <li><a href="#contact">Contact</a></li>
   </ul>
 </nav>
-
-<!-- HERO -->
 <section id="hero" style="max-width:1100px;margin:0 auto;padding:7rem 3rem 4rem;position:relative;z-index:1;display:flex;flex-direction:column;justify-content:center;min-height:100vh">
   <p class="hero-eyebrow">// initializing portfolio.exe</p>
   <h1 class="hero-name">Hello, I'm <span class="glow">Aditya</span></h1>
@@ -418,9 +395,9 @@ footer span{color:var(--cyan)}
     I'm a&nbsp;<span class="typed" id="typed-text"></span><span class="cursor"></span>
   </p>
   <p class="hero-desc">
-    B.Tech CSE student on a mission to build web products that solve real problems —
-    from specificity-based activity matchmaking to immersive creative interfaces.
-    Currently in Semester IV, exploring the intersection of systems thinking and product development.
+    B.Tech CSE student on a mission to build products that solve real problems —
+    from AI-powered skin cancer detection for rural communities to safety-first social platforms.
+    Currently in Semester IV, exploring the intersection of machine learning, explainable AI, and product development.
   </p>
   <div class="hero-btns">
     <a href="#projects" class="btn btn-primary">View Projects</a>
@@ -428,8 +405,6 @@ footer span{color:var(--cyan)}
   </div>
   <div class="scroll-hint">SCROLL</div>
 </section>
-
-<!-- ABOUT -->
 <section id="about">
   <span class="section-label reveal">01 / About me</span>
   <h2 class="section-title reveal">Who I Am</h2>
@@ -443,7 +418,7 @@ footer span{color:var(--cyan)}
     <div class="about-text reveal">
       <p>I'm <strong>Aditya</strong>, a Computer Science undergraduate at United University, Uttar Pradesh, currently in my fourth semester. I'm deeply passionate about building web products that go beyond the surface — things that actually solve problems people face daily.</p>
       <p>My academic journey has taken me through <strong>Theory of Automata</strong>, Complexity Theory, Discrete Mathematics, and Object-Oriented Technology — all of which shape how I think about system design and problem-solving.</p>
-      <p>Outside academics, I play <strong>Valorant</strong> and think a lot about why solo-queue experiences are so frustrating — which led me to start researching a specificity-based activity companion platform.</p>
+      <p>Outside academics, I'm passionate about <strong>AI and machine learning research</strong>, particularly in medical imaging — which led me to build LesionLens and conduct malaria parasite detection research.</p>
       <p>I believe great products come from genuine frustration with existing solutions.</p>
       <div class="about-chips">
         <span class="chip">C/C++</span>
@@ -451,7 +426,7 @@ footer span{color:var(--cyan)}
         <span class="chip">JavaScript</span>
         <span class="chip">React</span>
         <span class="chip">Node.js</span>
-        <span class="chip">Valorant</span>
+        <span class="chip">Machine Learning</span>
         <span class="chip">Web Design</span>
         <span class="chip">Automata Theory</span>
       </div>
@@ -459,17 +434,14 @@ footer span{color:var(--cyan)}
   </div>
 </section>
 
-<!-- SKILLS -->
 <section id="skills" style="background:rgba(13,20,40,0.5)">
   <span class="section-label reveal">02 / Skills</span>
   <h2 class="section-title reveal">Tech Stack</h2>
   <div class="section-line reveal"></div>
   <div class="skills-grid" id="skills-grid">
-    <!-- filled by JS -->
   </div>
 </section>
 
-<!-- PROJECTS -->
 <section id="projects">
   <span class="section-label reveal">03 / Projects</span>
   <h2 class="section-title reveal">What I've Built</h2>
@@ -477,45 +449,46 @@ footer span{color:var(--cyan)}
   <div class="projects-grid">
 
     <div class="project-card reveal" style="--accent:#00D4FF">
-      <span class="project-status status-active">IN PROGRESS</span>
-      <h3 class="project-title">Activity Companion Platform</h3>
-      <p class="project-desc">A specificity-based matchmaking platform for shared activities — ranked gaming sessions, music jams, study groups. Solving the problem no existing app handles: high-granularity partner matching.</p>
+      <span class="project-status status-done">COMPLETED</span>
+      <h3 class="project-title">LESIONLENS</h3>
+      <p class="project-desc">Rural Skin Cancer Prediction with Explainable AI. An AI-assisted platform enabling users in underserved areas to upload images of suspicious skin lesions and receive an initial assessment. Features Grad-CAM visual interpretation, automated report generation, a doctor validation portal, and a domain-restricted medical chatbot.</p>
       <div class="project-tags">
-        <span class="tag">React</span>
-        <span class="tag">Node.js</span>
-        <span class="tag">MongoDB</span>
-        <span class="tag">Research Phase</span>
+        <span class="tag">Machine Learning</span>
+        <span class="tag">Explainable AI</span>
+        <span class="tag">Grad-CAM</span>
+        <span class="tag">Medical Imaging</span>
+        <span class="tag">Python</span>
       </div>
     </div>
 
     <div class="project-card reveal" style="--accent:#7B2FBE">
-      <span class="project-status status-active">IN PROGRESS</span>
-      <h3 class="project-title">Valorant Cosmic Interface</h3>
-      <p class="project-desc">A Valorant-themed web experience featuring Agent Astra in a "guardian stage" cosmic UI. Scroll-triggered scene transitions, SVG character animations, and canvas-based atmospheric effects.</p>
+      <span class="project-status status-done">COMPLETED</span>
+      <h3 class="project-title">ASTRA</h3>
+      <p class="project-desc">Interest-Based Social Companion Platform. A safety-first social platform connecting users through shared interests — gaming, art, fitness, music, travel, and more. Built with user verification, reputation & trust scoring, interaction timers, and community moderation to foster meaningful, balanced connections.</p>
       <div class="project-tags">
-        <span class="tag">HTML/CSS</span>
-        <span class="tag">Canvas API</span>
-        <span class="tag">SVG Animation</span>
-        <span class="tag">JavaScript</span>
+        <span class="tag">Product Design</span>
+        <span class="tag">UX Design</span>
+        <span class="tag">Trust & Safety</span>
+        <span class="tag">Platform Architecture</span>
+        <span class="tag">Product Strategy</span>
       </div>
     </div>
 
     <div class="project-card reveal" style="--accent:#FFD700">
-      <span class="project-status status-done">COMPLETED</span>
-      <h3 class="project-title">OOT Exam Revision App</h3>
-      <p class="project-desc">A structured interactive revision tool covering Java Applets, AWT, Layout Managers, and Event Handling — built to accelerate Semester IV exam prep with concept summaries and code examples.</p>
+      <span class="project-status status-active">IN PROGRESS</span>
+      <h3 class="project-title">Medical Image Analysis Research</h3>
+      <p class="project-desc">Malaria Parasite Detection — Investigating ML techniques for automated malaria parasite detection from microscopic blood smear images. Work includes medical image preprocessing, Otsu Thresholding segmentation, feature extraction & optimization, and ML-based classification with performance benchmarking.</p>
       <div class="project-tags">
-        <span class="tag">HTML</span>
-        <span class="tag">CSS</span>
-        <span class="tag">JavaScript</span>
-        <span class="tag">Java OOT</span>
+        <span class="tag">Medical Imaging</span>
+        <span class="tag">Computer Vision</span>
+        <span class="tag">Otsu Thresholding</span>
+        <span class="tag">Research</span>
+        <span class="tag">Data Analysis</span>
       </div>
     </div>
 
   </div>
 </section>
-
-<!-- RESUME -->
 <section id="resume" style="background:rgba(13,20,40,0.5)">
   <span class="section-label reveal">04 / Resume</span>
   <h2 class="section-title reveal">My Journey</h2>
@@ -550,7 +523,7 @@ footer span{color:var(--cyan)}
       <div class="tl-dot" style="border-color:var(--gold);box-shadow:0 0 12px rgba(255,215,0,0.5)"></div>
       <div class="tl-year" style="color:var(--gold)">2026</div>
       <div class="tl-event">Building real-world products</div>
-      <div class="tl-detail">Researching activity matchmaking platform — from insight to MVP</div>
+      <div class="tl-detail">Built LesionLens (AI skin cancer detection) &amp; ASTRA (social platform); ongoing malaria parasite detection research</div>
     </div>
   </div>
 
@@ -560,7 +533,7 @@ footer span{color:var(--cyan)}
     <div class="res-skill-card"><div class="res-skill-icon">🧮</div><div class="res-skill-name">Algorithms</div></div>
     <div class="res-skill-card"><div class="res-skill-icon">☕</div><div class="res-skill-name">Java / OOP</div></div>
     <div class="res-skill-card"><div class="res-skill-icon">🔬</div><div class="res-skill-name">Automata Theory</div></div>
-    <div class="res-skill-card"><div class="res-skill-icon">🎮</div><div class="res-skill-name">Game-Aware Design</div></div>
+    <div class="res-skill-card"><div class="res-skill-icon">🤖</div><div class="res-skill-name">Machine Learning</div></div>
   </div>
 
   <div class="reveal" style="margin-top:2.5rem;text-align:center">
@@ -569,8 +542,6 @@ footer span{color:var(--cyan)}
     </a>
   </div>
 </section>
-
-<!-- CONTACT -->
 <section id="contact">
   <span class="section-label reveal">05 / Contact</span>
   <h2 class="section-title reveal">Let's Connect</h2>
@@ -579,17 +550,21 @@ footer span{color:var(--cyan)}
     <div class="contact-info reveal">
       <p>Got a project idea, a collab proposal, or just want to talk tech? I'm always open to interesting conversations — especially about building things that actually matter.</p>
       <div class="contact-links">
-        <a href="mailto:your@email.com" class="contact-link">
+        <a href="mailto:aditya.gaurav.cs@gmail.com" class="contact-link">
           <span class="contact-link-icon">✉</span>
-          your@email.com
+          aditya.gaurav.cs@gmail.com
         </a>
-        <a href="https://github.com/yourusername" target="_blank" class="contact-link">
-          <span class="contact-link-icon">GH</span>
-          github.com/yourusername
+        <a href="https://github.com/Aditya-CS-ui" target="_blank" class="contact-link">
+          <span class="contact-link-icon">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M12 0C5.374 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0 1 12 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z"/></svg>
+          </span>
+          github.com/Aditya-CS-ui
         </a>
-        <a href="https://linkedin.com/in/yourusername" target="_blank" class="contact-link">
-          <span class="contact-link-icon">in</span>
-          linkedin.com/in/yourusername
+        <a href="https://www.linkedin.com/in/aditya-gaurav-973aa7321" target="_blank" class="contact-link">
+          <span class="contact-link-icon">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+          </span>
+          linkedin.com/in/aditya-gaurav
         </a>
       </div>
     </div>
@@ -600,7 +575,7 @@ footer span{color:var(--cyan)}
       </div>
       <div class="form-group">
         <label>Email</label>
-        <input type="email" id="f-email" placeholder="your@email.com" required />
+        <input type="email" id="f-email" placeholder="aditya.gaurav.cs@gmail.com" required />
       </div>
       <div class="form-group">
         <label>Message</label>
@@ -617,7 +592,6 @@ footer span{color:var(--cyan)}
 </footer>
 
 <script>
-/* ---- STARFIELD ---- */
 (function(){
   const c=document.getElementById('stars');
   const ctx=c.getContext('2d');
@@ -647,9 +621,8 @@ footer span{color:var(--cyan)}
   init();draw();
 })();
 
-/* ---- TYPEWRITER ---- */
 (function(){
-  const words=['CSE Student.','Web Developer.','Problem Solver.','Valorant Player.','Builder.'];
+  const words=['CSE Student.','Web Developer.','Problem Solver.','AI Researcher.','Builder.'];
   const el=document.getElementById('typed-text');
   let wi=0,ci=0,del=false;
   function tick(){
@@ -666,7 +639,6 @@ footer span{color:var(--cyan)}
   tick();
 })();
 
-/* ---- SKILLS ---- */
 const skills=[
   {name:'HTML / CSS',level:88,color:'#00D4FF'},
   {name:'JavaScript',level:75,color:'#00D4FF'},
@@ -689,7 +661,6 @@ skills.forEach(s=>{
     </div>
   </div>`;
 });
-
 /* ---- INTERSECTION OBSERVER ---- */
 const reveals=document.querySelectorAll('.reveal');
 const obs=new IntersectionObserver(entries=>{
@@ -705,7 +676,6 @@ const obs=new IntersectionObserver(entries=>{
 },{threshold:0.12});
 reveals.forEach(r=>obs.observe(r));
 
-/* ---- ACTIVE NAV ---- */
 const sections=['about','skills','projects','resume','contact'];
 window.addEventListener('scroll',()=>{
   const y=window.scrollY+120;
@@ -721,7 +691,6 @@ window.addEventListener('scroll',()=>{
   });
 });
 
-/* ---- CONTACT FORM ---- */
 function handleSubmit(e){
   e.preventDefault();
   const msg=document.getElementById('form-msg');
