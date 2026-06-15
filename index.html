@@ -143,7 +143,6 @@ section{
 .scroll-hint::after{
   content:'';width:1px;height:40px;background:linear-gradient(var(--cyan),transparent);
 }
-
 .section-label{
   font-family:'JetBrains Mono',monospace;
   font-size:0.75rem;color:var(--cyan);
@@ -160,7 +159,6 @@ section{
   background:linear-gradient(90deg,var(--cyan),transparent);
   margin-bottom:3rem;
 }
-
 .about-grid{
   display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:center;
 }
@@ -197,7 +195,6 @@ section{
   font-size:0.8rem;color:var(--cyan);
   font-family:'JetBrains Mono',monospace;
 }
-
 .skills-grid{
   display:grid;grid-template-columns:1fr 1fr;gap:1.2rem;
 }
@@ -220,7 +217,6 @@ section{
   transform:scaleX(0);transform-origin:left;
   transition:transform 1.2s cubic-bezier(0.16,1,0.3,1);
 }
-
 .projects-grid{
   display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));
   gap:1.5rem;
@@ -264,7 +260,6 @@ section{
   border:1px solid rgba(255,255,255,0.1);
   border-radius:2px;color:var(--muted);
 }
-
 .timeline{position:relative;padding-left:3rem}
 .timeline::before{
   content:'';position:absolute;left:0.5rem;top:0;bottom:0;
@@ -340,7 +335,6 @@ section{
   font-size:0.85rem;padding:0.5rem;margin-top:0.5rem;
   border-radius:3px;display:none;
 }
-
 footer{
   position:relative;z-index:1;text-align:center;
   padding:2rem;border-top:1px solid var(--border);
@@ -375,9 +369,7 @@ footer span{color:var(--cyan)}
 </style>
 </head>
 <body>
-
 <canvas id="stars"></canvas>
-
 <nav>
   <a class="nav-logo" href="#hero">ADI<span>TYA</span></a>
   <ul class="nav-links">
@@ -433,15 +425,14 @@ footer span{color:var(--cyan)}
     </div>
   </div>
 </section>
-
 <section id="skills" style="background:rgba(13,20,40,0.5)">
   <span class="section-label reveal">02 / Skills</span>
   <h2 class="section-title reveal">Tech Stack</h2>
   <div class="section-line reveal"></div>
   <div class="skills-grid" id="skills-grid">
+   
   </div>
 </section>
-
 <section id="projects">
   <span class="section-label reveal">03 / Projects</span>
   <h2 class="section-title reveal">What I've Built</h2>
@@ -497,33 +488,27 @@ footer span{color:var(--cyan)}
   <div class="timeline reveal">
     <div class="tl-item">
       <div class="tl-dot"></div>
-      <div class="tl-year">2022</div>
-      <div class="tl-event">Started B.Tech in Computer Science</div>
-      <div class="tl-detail">United University, Varanasi — Began core CS curriculum</div>
-    </div>
-    <div class="tl-item">
-      <div class="tl-dot"></div>
-      <div class="tl-year">2023</div>
-      <div class="tl-event">Built first web projects</div>
-      <div class="tl-detail">Self-taught frontend — HTML, CSS, JavaScript, responsive design</div>
-    </div>
-    <div class="tl-item">
-      <div class="tl-dot"></div>
       <div class="tl-year">2024</div>
-      <div class="tl-event">Semester III — Core CS deep dive</div>
-      <div class="tl-detail">Data Structures & Algorithms, Object-Oriented Programming, Discrete Mathematics</div>
+      <div class="tl-event">Started B.Tech in Computer Science</div>
+      <div class="tl-detail">United University, Prayagraj — Semester I & II, core CS curriculum</div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-dot"></div>
+      <div class="tl-year">2024 – 2025</div>
+      <div class="tl-event">Semester II & III — Deep dive into CS fundamentals</div>
+      <div class="tl-detail">Data Structures & Algorithms, Object-Oriented Programming, Discrete Mathematics — also started self-teaching frontend</div>
     </div>
     <div class="tl-item">
       <div class="tl-dot"></div>
       <div class="tl-year">2025</div>
-      <div class="tl-event">Semester IV — Theory & Systems</div>
-      <div class="tl-detail">Theory of Automata, Complexity Theory (P/NP), Java OOT — advanced coursework</div>
+      <div class="tl-event">Semester III — Research & Projects begin</div>
+      <div class="tl-detail">Built LesionLens & ASTRA; conducted Malaria Parasite Detection research using ML</div>
     </div>
     <div class="tl-item">
       <div class="tl-dot" style="border-color:var(--gold);box-shadow:0 0 12px rgba(255,215,0,0.5)"></div>
       <div class="tl-year" style="color:var(--gold)">2026</div>
-      <div class="tl-event">Building real-world products</div>
-      <div class="tl-detail">Built LesionLens (AI skin cancer detection) &amp; ASTRA (social platform); ongoing malaria parasite detection research</div>
+      <div class="tl-event">Semester IV — Completed ✓</div>
+      <div class="tl-detail">Theory of Automata, Complexity Theory (P/NP), Java OOT — ongoing malaria parasite detection research</div>
     </div>
   </div>
 
@@ -620,7 +605,6 @@ footer span{color:var(--cyan)}
   window.addEventListener('resize',init);
   init();draw();
 })();
-
 (function(){
   const words=['CSE Student.','Web Developer.','Problem Solver.','AI Researcher.','Builder.'];
   const el=document.getElementById('typed-text');
@@ -638,7 +622,6 @@ footer span{color:var(--cyan)}
   }
   tick();
 })();
-
 const skills=[
   {name:'HTML / CSS',level:88,color:'#00D4FF'},
   {name:'JavaScript',level:75,color:'#00D4FF'},
@@ -661,7 +644,6 @@ skills.forEach(s=>{
     </div>
   </div>`;
 });
-/* ---- INTERSECTION OBSERVER ---- */
 const reveals=document.querySelectorAll('.reveal');
 const obs=new IntersectionObserver(entries=>{
   entries.forEach(e=>{
