@@ -29,6 +29,7 @@ body{
   overflow-x:hidden;
   line-height:1.6;
 }
+
 ::-webkit-scrollbar{width:4px}
 ::-webkit-scrollbar-track{background:var(--bg)}
 ::-webkit-scrollbar-thumb{background:var(--cyan);border-radius:2px}
@@ -65,6 +66,7 @@ nav{
 }
 .nav-links a:hover,.nav-links a.active{color:var(--cyan)}
 .nav-links a:hover::after,.nav-links a.active::after{transform:scaleX(1)}
+
 section{
   position:relative;z-index:1;
   min-height:100vh;
@@ -146,6 +148,7 @@ section{
 .scroll-hint::after{
   content:'';width:1px;height:40px;background:linear-gradient(var(--cyan),transparent);
 }
+
 .section-label{
   font-family:'JetBrains Mono',monospace;
   font-size:0.75rem;color:var(--cyan);
@@ -560,7 +563,7 @@ footer span{color:var(--cyan)}
     <a href="https://docs.google.com/document/d/1VZaB90C4h3ISryG8Ilgbc1MVcaC0R9kO/edit" target="_blank" class="btn btn-outline">
       Download Resume PDF
     </a>
-    <p style="margin-top:0.8rem;font-size:0.78rem;color:var(--muted);font-family:'JetBrains Mono',monospace">// replace the Google Drive link above with your actual resume link</p>
+
   </div>
 </section>
 
@@ -693,7 +696,6 @@ const obs=new IntersectionObserver(entries=>{
   entries.forEach(e=>{
     if(e.isIntersecting){
       e.target.classList.add('visible');
-      // animate skill bars when skills section visible
       if(e.target.closest('#skills')){
         document.querySelectorAll('.skill-fill').forEach(f=>{f.style.transform='scaleX(1)'});
       }
@@ -716,6 +718,7 @@ window.addEventListener('scroll',()=>{
     }
   });
 });
+
 async function handleSubmit(e){
   e.preventDefault();
   const btn=document.getElementById('submit-btn');
