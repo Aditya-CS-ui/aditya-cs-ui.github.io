@@ -425,7 +425,7 @@ body.loading{overflow:hidden}
   <div class="lead-box rv">
     <img class="club-logo" src="wikiclub-logo.svg" alt="WikiClub Tech UU logo" width="110" height="110">
     <div>
-      <p>I lead the university tech club at United University, Prayagraj. I run technical learning, collaborative projects, the club website, the Student Helpdesk, repository management, and new feature integration.</p>
+      <p>I help run the university tech club at United University, Prayagraj: technical learning, collaborative projects, the club website, the Student Helpdesk, repository management, and new features.</p>
       <ul><li>Technical learning</li><li>Club website</li><li>Student Helpdesk</li><li>Repository management</li><li>Open source</li></ul>
     </div>
   </div>
@@ -443,7 +443,7 @@ body.loading{overflow:hidden}
   <div class="tl rv">
     <div><b>2024</b><p>Started B.Tech in Computer Science at United University, Prayagraj, with core coursework in algorithms, object-oriented programming, and discrete mathematics.</p></div>
     <div><b>2025</b><p>Began medical imaging research and built the first versions of LesionLens and the malaria classification study. Taught myself web development.</p></div>
-    <div><b>2026</b><p>Became Lead of WikiClub Tech UU, competed in hackathons, and took third place at the Hacktoberfest Hackathon on 18 October.</p></div>
+    <div><b>2026</b><p>Started helping run WikiClub Tech UU, joined hackathons, and placed third at the Hacktoberfest Hackathon on 18 October. The journey is still ongoing.</p></div>
   </div>
   <p class="rv" style="margin-top:1.5rem"><a class="btn ghost" target="_blank" rel="noopener noreferrer" href="https://docs.google.com/document/d/1VZaB90C4h3ISryG8Ilgbc1MVcaC0R9kO/export?format=pdf">Download resume (PDF)</a></p>
 </div></section>
@@ -451,7 +451,7 @@ body.loading{overflow:hidden}
 <section id="skills"><div class="wrap">
   <p class="kicker rv">Toolkit</p>
   <h2 class="rv">Skills</h2>
-  <div class="skills rv" id="skills"></div>
+  <div class="skills rv" id="skill-grid"></div>
 </div></section>
 
 <section id="contact"><div class="wrap contact">
@@ -563,7 +563,7 @@ FILTERS.forEach(([k,n],i)=>{const b=document.createElement('button');b.textConte
 
 /* Skills */
 [['Languages','C, Java, JavaScript, Python'],['Web','HTML and CSS, React, Node.js, Next.js, Full-stack development'],['Machine learning','EfficientNet-B3, Grad-CAM, SHAP, SVM, Random Forest, Grey Wolf Optimization'],['Image analysis','Otsu thresholding, Morphological operations, Radiomics, Feature extraction'],['Security','HTTP security headers, Misconfiguration analysis'],['Computer science','Data structures and algorithms, Automata theory, Complexity theory, Discrete mathematics, Object-oriented design'],['Leadership','Club leadership, Open source, Repository management']]
-.forEach(([n,v])=>{const d=document.createElement('div');d.className='skill';d.innerHTML=`<h3>${n}</h3><div class="chips">${v.split(', ').map(x=>`<span>${x}</span>`).join('')}</div>`;$('#skills').append(d)});
+.forEach(([n,v])=>{const d=document.createElement('div');d.className='skill';d.innerHTML=`<h3>${n}</h3><div class="chips">${v.split(', ').map(x=>`<span>${x}</span>`).join('')}</div>`;$('#skill-grid').append(d)});
 
 /* Reveal and counters */
 const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}}),{threshold:.12});
