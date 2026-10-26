@@ -329,52 +329,83 @@ sz();addEventListener('resize',()=>{sz();if(RM)fr()});new IntersectionObserver(e
 $('#cf').onsubmit=async e=>{e.preventDefault();const f=e.target,b=$('#sb'),m=$('#fm'),d=Object.fromEntries(new FormData(f));if(d._gotcha)return;b.disabled=true;b.textContent='Sending...';
 try{const r=await fetch('https://formspree.io/f/mwvjzvod',{method:'POST',headers:{'Content-Type':'application/json',Accept:'application/json'},body:JSON.stringify({...d,_subject:'Portfolio contact from '+d.name,_replyto:d.email})});if(!r.ok)throw 0;m.textContent='Thanks, '+d.name+'. Your message was sent.';m.style.color='#5df0a8';f.reset()}catch{m.textContent='Message not sent. Please use the email link on this page.';m.style.color='#ffd27a'}
 b.disabled=false;b.textContent='Send message'};
-/* particle-Earth preloader: form 0-3s, hold, burst at 4s */
-(()=>{const pre=$('#pre'),c=$('#pc'),g=c.getContext('2d');let W,H,D;
+/* particle-Earth preloader: particles settle onto a real Earth map, the page waits until the 3D background has drawn its planet, then bursts */
+(()=>{
+const pre=$('#pre'),c=$('#pc'),g=c.getContext('2d');let W,H,D;
 function rs(){D=Math.min(devicePixelRatio||1,2);W=innerWidth;H=innerHeight;c.width=W*D;c.height=H*D;g.setTransform(D,0,0,D,0,0)}
 rs();addEventListener('resize',rs);
-const N=innerWidth<700?900:1700,P=[];
-for(let i=0;i<N;i++){const y=1-2*(i+.5)/N,r=Math.sqrt(1-y*y),th=i*2.399963,tx=Math.cos(th)*r,ty=y,tz=Math.sin(th)*r;
- const a=Math.random()*6.283,b=Math.acos(Math.random()*2-1),d=2.2+Math.random()*3.2;
- const v=Math.sin(tx*3.1+1)+Math.sin(ty*4.2+2)+Math.sin(tz*3.4)+Math.sin((tx+tz)*5)*.5,u=Math.random();
- P.push({tx,ty,tz,sx:Math.sin(b)*Math.cos(a)*d,sy:Math.cos(b)*d,sz:Math.sin(b)*Math.sin(a)*d,dl:Math.random()*.55,
- col:u<.04?'255,210,122':v>.9?'93,240,168':v>.2?'70,140,230':'58,108,255',sz2:.8+Math.random()*1.3})}
-let done=false,burst=-1;const t0=performance.now();
+const N=innerWidth<700?3000:5200,TOT=4;
+const RMc=matchMedia('(prefers-reduced-motion:reduce)').matches;
+const MAP_URL='https://raw.githubusercontent.com/mrdoob/three.js/r143/examples/textures/planets/earth_atmos_2048.jpg';
+
+// progress counter: earth map, avatar, fonts, 3D earth
+let loaded=0;const track=p=>Promise.resolve(p).then(()=>{loaded++},()=>{loaded++});
+
+// colours come from a real equirectangular Earth map; procedural continents are used if it can't load
+function sampleImage(img){const w=img.naturalWidth,h=img.naturalHeight,cv=document.createElement('canvas');cv.width=w;cv.height=h;const cx=cv.getContext('2d');cx.drawImage(img,0,0);const px=cx.getImageData(0,0,w,h).data;
+ return (lat,lon)=>{const x=Math.min(w-1,Math.max(0,Math.floor((lon+Math.PI)/(2*Math.PI)*w))),y=Math.min(h-1,Math.max(0,Math.floor((Math.PI/2-lat)/Math.PI*h))),o=(y*w+x)*4;return [px[o],px[o+1],px[o+2]]}}
+function proceduralMap(lat,lon){const cl=Math.cos(lat),x=cl*Math.sin(lon),y=Math.sin(lat),z=cl*Math.cos(lon);const v=Math.sin(x*3.1+1)+Math.sin(y*4.2+2)+Math.sin(z*3.4)+Math.sin((x+z)*5)*.5;return v>.6?[104,150,92]:[36,92,190]}
+const mapP=new Promise(res=>{const im=new Image();im.crossOrigin='anonymous';
+ im.onload=()=>{try{res(sampleImage(im))}catch(e){res(proceduralMap)}};
+ im.onerror=()=>res(proceduralMap);im.src=MAP_URL;setTimeout(()=>res(proceduralMap),6000)});
+track(mapP);
+
+// particles start scattered around the screen; each one is given a target on the globe
+const P=[];
+for(let i=0;i<N;i++){const a=Math.random()*6.283,b=Math.acos(Math.random()*2-1),d=2.2+Math.random()*3.2;
+ P.push({tx:0,ty:0,tz:0,col:'58,108,255',sx:Math.sin(b)*Math.cos(a)*d,sy:Math.cos(b)*d,sz:Math.sin(b)*Math.sin(a)*d,dl:Math.random()*.55,sz2:.8+Math.random()*1.3})}
+function assign(sample){
+ let n=0,guard=0;
+ while(n<N&&guard++<N*60){
+   const y=Math.random()*2-1,lat=Math.asin(y),lon=Math.random()*Math.PI*2-Math.PI;
+   const m=sample(lat,lon),ocean=m[2]>m[0]+8&&m[2]>m[1]+8;
+   if(ocean&&Math.random()>.12)continue;
+   const r=Math.cos(lat),p=P[n++];
+   p.tx=r*Math.sin(lon);p.ty=y;p.tz=r*Math.cos(lon);
+   p.col=ocean?'58,108,255':m.map(v=>Math.min(255,v*1.2+18)|0).join(',');
+ }
+ for(;n<N;n++){const s=P[(Math.random()*n)|0],p=P[n];p.tx=s.tx;p.ty=s.ty;p.tz=s.tz;p.col=s.col}
+}
+
+let t0=null,burst=-1,ready=false,done=false;
 const ease=p=>1-Math.pow(1-p,3);
 const earthP=new Promise(r=>{window.__earthReady?r():addEventListener('earth-ready',r,{once:true})});
 const av=$('.avatar'),imgP=new Promise(r=>{if(!av||av.complete)r();else{av.addEventListener('load',r);av.addEventListener('error',r)}});
-let ready=false;Promise.all([earthP,document.fonts?document.fonts.ready:0,imgP]).then(()=>ready=true);
-const RMc=matchMedia('(prefers-reduced-motion:reduce)').matches;
+mapP.then(s=>{assign(s);t0=performance.now()});
+track(imgP);track(earthP);track(document.fonts?document.fonts.ready:0);
+Promise.all([mapP,earthP,imgP,document.fonts?document.fonts.ready:0]).then(()=>ready=true);
+const pct=()=>Math.round(loaded/TOT*100);
+
 function endAll(){if(done)return;done=true;pre.classList.add('done');setTimeout(()=>pre.remove(),1100)}
-function startBurst(t){if(burst>=0)return;burst=t;document.body.classList.remove('loading');window.__bootDone=true;dispatchEvent(new Event('boot-done'))}
-if(RMc){setTimeout(()=>{startBurst(0);endAll()},600);return}
+function startBurst(t){if(burst>=0)return;burst=t;document.body.classList.remove('loading');window.__bootDone=true;dispatchEvent(new Event('boot-done'));if(RMc)endAll()}
 function frame(now){if(done)return;requestAnimationFrame(frame);
- const t=(now-t0)/1000;
+ const t=t0===null?0:(now-t0)/1000;
+ // burst only when the formation is complete AND the 3D background has rendered its planet
  if(burst<0&&t>=4&&ready)startBurst(t);
  const bt=burst>=0?t-burst:0;
  if(bt>0.45)pre.style.opacity=String(Math.max(0,1-(bt-.45)/.7));
  if(bt>1.3){endAll();return}
  g.clearRect(0,0,W,H);
  const cx=W/2,cy=H/2,R=Math.min(W,H)*(innerWidth<700?.3:.24),form=Math.min(1,t/3);
- // soft core glow
  const gl=g.createRadialGradient(cx,cy,R*.2,cx,cy,R*2.1),ga=burst>=0?Math.max(0,.5-bt*.7):.12+.38*ease(form);
  gl.addColorStop(0,`rgba(58,108,255,${ga})`);gl.addColorStop(1,'rgba(58,108,255,0)');g.fillStyle=gl;g.fillRect(0,0,W,H);
- const ang=t*.8,ca=Math.cos(ang),sa=Math.sin(ang),tl=.37,ct=Math.cos(tl),st=Math.sin(tl);
- for(const p of P){const q=Math.min(1,Math.max(0,(t-p.dl)/2.45)),e=ease(q);
-  let x=p.sx+(p.tx*ca-p.tz*sa-p.sx)*e,y=p.sy+(p.ty-p.sy)*e,z=p.sz+(p.tx*sa+p.tz*ca-p.sz)*e;
-  // keep unformed points drifting, then lock to rotating sphere
-  const x2=x*ct-y*st,y2=x*st+y*ct;x=x2;y=y2;
-  let al=.25+.75*e;
-  if(burst>=0){const k=1+bt*4+bt*bt*14;x*=k;y*=k;z*=k;al*=Math.max(0,1-bt/.9)}
-  const sc=3/(3-z*.6);if(sc<=0)continue;
-  const px=cx+x*R*sc,py=cy+y*R*sc;
-  if(px<-20||px>W+20||py<-20||py>H+20)continue;
-  const depth=.45+.55*((z+1)/2),sz=p.sz2*sc*(burst>=0?1+bt*2:1);
-  g.fillStyle=`rgba(${p.col},${Math.min(1,al*depth)})`;g.fillRect(px,py,sz,sz)}
- if(burst<0&&t>4.2){g.font='600 12px Inter,sans-serif';g.textAlign='center';g.fillStyle=`rgba(154,166,196,${.45+.35*Math.sin(t*3)})`;g.fillText('LOADING EARTH…',cx,cy+R*1.55)}
+ if(t0!==null){
+  const ang=t*.8,ca=Math.cos(ang),sa=Math.sin(ang),tl=.37,ct=Math.cos(tl),st=Math.sin(tl);
+  for(const p of P){const q=Math.min(1,Math.max(0,(t-p.dl)/2.45)),e=ease(q);
+   let x=p.sx+(p.tx*ca-p.tz*sa-p.sx)*e,y=p.sy+(p.ty-p.sy)*e,z=p.sz+(p.tx*sa+p.tz*ca-p.sz)*e;
+   const x2=x*ct-y*st,y2=x*st+y*ct;x=x2;y=y2;
+   let al=.25+.75*e;
+   if(burst>=0){const k=1+bt*4+bt*bt*14;x*=k;y*=k;z*=k;al*=Math.max(0,1-bt/.9)}
+   const sc=3/(3-z*.6);if(sc<=0)continue;
+   const px=cx+x*R*sc,py=cy+y*R*sc;
+   if(px<-20||px>W+20||py<-20||py>H+20)continue;
+   const depth=.45+.55*((z+1)/2),sz=p.sz2*sc*(burst>=0?1+bt*2:1);
+   g.fillStyle=`rgba(${p.col},${Math.min(1,al*depth)})`;g.fillRect(px,py,sz,sz)}
+ }
+ if(burst<0&&(t>4.2||loaded<TOT)){g.font='600 12px Inter,sans-serif';g.textAlign='center';g.fillStyle=`rgba(154,166,196,${.45+.35*Math.sin(t*3)})`;g.fillText(`LOADING EARTH… ${pct()}%`,cx,cy+R*1.55)}
 }
 requestAnimationFrame(frame);
-setTimeout(()=>{if(burst<0)startBurst((performance.now()-t0)/1000)},45000);
+setTimeout(()=>{if(burst<0)startBurst(t0===null?0:(performance.now()-t0)/1000)},30000);
 })();
 </script>
 <script type="module">
@@ -547,7 +578,7 @@ const stars=new THREE.Points(sg,starMat);stars.frustumCulled=false;scene.add(sta
 
 // clouds
 let cloudsDone=false,planetDone=false;
-const checkReady=()=>{if(cloudsDone&&planetDone&&!window.__earthReady)requestAnimationFrame(()=>requestAnimationFrame(()=>{window.__earthReady=true;dispatchEvent(new Event('earth-ready'))}))};
+const checkReady=()=>{};
 const cloudTime={v:0};let planetTime={v:0};
 new THREE.TextureLoader().load(BASE+'/planet-clouds.png',tex=>{
   cloudsDone=true;checkReady();
@@ -731,6 +762,7 @@ function frame(now){
   camera.layers.set(LAYERS.TORUS_SCENE);torusComposer.render();
   camera.layers.set(LAYERS.BLOOM_SCENE);bloomComposer.render();
   camera.layers.set(LAYERS.ENTIRE_SCENE);finalComposer.render();
+  if(!window.__earthReady&&planetDone&&cloudsDone){window.__earthReady=true;dispatchEvent(new Event('earth-ready'))}
 }
 requestAnimationFrame(frame);
 </script>
